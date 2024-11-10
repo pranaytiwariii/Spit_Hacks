@@ -51,7 +51,7 @@ function Hero() {
       <div className="bottom-container">
         <div className="img-section">
           <img
-            className="lg:w-[60%] m-auto"
+            className="w-full"
             src="/Homeimage.png"
             alt="mackbook"
           />
