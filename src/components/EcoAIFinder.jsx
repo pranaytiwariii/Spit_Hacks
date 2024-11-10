@@ -10,7 +10,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import ToolRecommendations from './ToolRecommendations'
-import TextAi from './TextAi'
 
 const categories = [
   "Machine Learning Optimization", "Energy-Efficient NLP", "Green Computer Vision",
@@ -24,9 +23,30 @@ const categories = [
 
 export default function EcoAIFinder() {
   const [step, setStep] = useState(0)
+  const [userResponses, setUserResponses] = useState({
+    focus: '',
+    categories: [],
+    industry: '',
+    metrics: [],
+    integrations: '',
+  })
   const [recommendations, setRecommendations] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedPreference, setSelectedPreference] = useState('')
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setUserResponses(prev => ({ ...prev, [name]: value }))
+    
+    if (name === 'focus') {
+      setSelectedPreference(value)
+      const input_json = JSON.stringify({
+        "category": selectedCategory,
+        "preference": value
+      })
+      console.log(input_json)
+    }
+  }
 
   const handleCheckboxChange = (field, value) => {
     setUserResponses(prev => ({
@@ -191,7 +211,6 @@ export default function EcoAIFinder() {
   return (
     <Card className="w-full p-5 flex-col">
       {renderStep()}
-      <TextAi />
     </Card>
   )
 }

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   CardContent,
@@ -8,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import ToolRecommendations from "./ToolRecommendations";
 
 export default function TextAi() {
   const [userResponses, setUserResponses] = useState({
@@ -17,19 +17,43 @@ export default function TextAi() {
     metrics: [],
     integrations: "",
   });
+  const [recommendations, setRecommendations] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserResponses((prev) => ({ ...prev, [name]: value }));
+  };
 
-    if (name === "focus") {
-      setSelectedPreference(value);
-      const input_json = JSON.stringify({
-        category: selectedCategory,
-        preference: value,
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8001/recommendations/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_query: userResponses.focus,
+        }),
       });
-      console.log(input_json);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch recommendations.");
+      }
+
+      const data = await response.json();
+      setRecommendations(data.recommendations);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <div>
       <CardHeader>
@@ -37,15 +61,23 @@ export default function TextAi() {
       </CardHeader>
       <CardContent>
         <Textarea
-          name="metrics"
-          value={userResponses.metrics}
+          name="focus"
+          value={userResponses.focus}
           onChange={handleInputChange}
           placeholder="Enter your metrics"
         />
       </CardContent>
       <CardFooter>
-        <Button onClick={() => setStep(5)}>Next</Button>
+        <Button onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? "Loading..." : "Get Recommendations"}
+        </Button>
       </CardFooter>
+      {error && <p className="text-red-500 mt-4">{error}</p>}
+
+      {/* Render ToolRecommendations if recommendations are available */}
+      {recommendations.length > 0 && (
+        <ToolRecommendations recommendations={recommendations} />
+      )}
     </div>
   );
 }
