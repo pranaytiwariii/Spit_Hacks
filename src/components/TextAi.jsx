@@ -22,6 +22,48 @@ export default function TextAi() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const sampleData = [
+    {
+      Tool: "Google Cloud IoT",
+      Score: 7.403348017621146,
+      Accuracy: 9.0,
+      Speed: 8.7,
+      "Energy Efficiency": 9.2,
+      "Carbon Footprint": 9.1,
+      "Waste Reduction": 9.0,
+      "Energy Consumption": 8.6,
+      "Resource Efficiency": 9.3,
+      "Water Usage": 5.0,
+      "Lifetime Durability": 9.2,
+    },
+    {
+      Tool: "Microsoft Azure IoT",
+      Score: 7.3189427312775335,
+      Accuracy: 8.9,
+      Speed: 8.6,
+      "Energy Efficiency": 9.1,
+      "Carbon Footprint": 9.2,
+      "Waste Reduction": 8.9,
+      "Energy Consumption": 8.5,
+      "Resource Efficiency": 9.1,
+      "Water Usage": 5.0,
+      "Lifetime Durability": 9.1,
+    },
+    {
+      Tool: "AWS IoT Greengrass",
+      Score: 7.247111111111112,
+      Accuracy: 8.8,
+      Speed: 8.5,
+      "Energy Efficiency": 9.3,
+      "Carbon Footprint": 9.1,
+      "Waste Reduction": 9.0,
+      "Energy Consumption": 8.4,
+      "Resource Efficiency": 9.2,
+      "Water Usage": 5.0,
+      "Lifetime Durability": 9.3,
+    },
+  ];
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserResponses((prev) => ({ ...prev, [name]: value }));
@@ -49,7 +91,8 @@ export default function TextAi() {
       const data = await response.json();
       setRecommendations(data.recommendations);
     } catch (err) {
-      setError(err.message);
+      setError("Failed to fetch recommendations. Displaying sample data.");
+      setRecommendations(sampleData); // Use sample data in case of error
     } finally {
       setIsLoading(false);
     }
