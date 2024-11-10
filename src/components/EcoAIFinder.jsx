@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -33,6 +34,7 @@ export default function EcoAIFinder() {
   const [recommendations, setRecommendations] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedPreference, setSelectedPreference] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -135,29 +137,39 @@ export default function EcoAIFinder() {
     switch (step) {
       case 0:
         return (
-          <>
+          <Card className="w-full max-w-md mx-auto p-5 border border-gray-300">
             <CardHeader>
-              <CardTitle>Welcome to Eco-AI Finder!</CardTitle>
-              <CardDescription>Let's find the best sustainable AI tools tailored to your needs.</CardDescription>
+              <CardTitle className="text-2xl">Welcome to Eco-AI Finder!</CardTitle>
+              <CardDescription className="text-xl">Let's find the best sustainable AI tools tailored to your needs.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-xl">
               <p>We'll ask you a few questions to understand your requirements and sustainability goals.</p>
             </CardContent>
-            <CardFooter>
-              <Button onClick={() => setStep(1)}>Get Started</Button>
+            <CardFooter className="flex justify-between">
+              <Link to="/">
+                <Button>Back</Button>
+              </Link>
+              <Button className="bg-black text-white" onClick={() => setStep(1)}>Next</Button>
             </CardFooter>
-          </>
+          </Card>
         )
       case 1:
         return (
-          <>
+          <Card className="w-full max-w-md mx-auto p-5 border border-gray-300">
             <CardHeader>
-              <CardTitle>Select AI Categories</CardTitle>
-              <CardDescription>Choose the categories that best fit your project needs</CardDescription>
+              <CardTitle className="text-2xl">Select AI Categories</CardTitle>
+              <CardDescription className="text-xl">Choose the categories that best fit your project needs</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-xl">
+              <Input 
+                type="text" 
+                placeholder="Search categories..." 
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)} 
+                className="mb-4"
+              />
               <ScrollArea className="h-[300px] pr-4">
-                {categories.map((category) => (
+                {categories.filter(category => category.toLowerCase().includes(searchTerm.toLowerCase())).map((category) => (
                   <div key={category} className="flex items-center space-x-2 mb-2">
                     <Checkbox
                       id={category}
@@ -169,37 +181,39 @@ export default function EcoAIFinder() {
                 ))}
               </ScrollArea>
             </CardContent>
-            <CardFooter>
-              <Button onClick={() => setStep(2)}>Next</Button>
+            <CardFooter className="flex justify-between">
+              <Button onClick={() => setStep(0)}>Back</Button>
+              <Button className="bg-black text-white" onClick={() => setStep(2)}>Next</Button>
             </CardFooter>
-          </>
+          </Card>
         )
       case 2:
         return (
-          <>
+          <Card className="w-full max-w-md mx-auto p-5 border border-gray-300">
             <CardHeader>
-              <CardTitle>What's your main focus?</CardTitle>
+              <CardTitle className="text-2xl">What's your main focus?</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-xl">
               <RadioGroup name="focus" onValueChange={(value) => handleInputChange({ target: { name: 'focus', value } })}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="energy efficiency" id="energy" />
-                  <Label htmlFor="energy">Energy Efficiency</Label>
+                  <Label htmlFor="energy">speed</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="waste reduction" id="waste" />
-                  <Label htmlFor="waste">Waste Reduction</Label>
+                  <Label htmlFor="waste">accuracy</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="resource management" id="resource" />
-                  <Label htmlFor="resource">Resource Management</Label>
+                  <Label htmlFor="resource">mix</Label>
                 </div>
               </RadioGroup>
             </CardContent>
-            <CardFooter>
-              <Button onClick={generateRecommendations}>Find Eco-AI Tools</Button>
+            <CardFooter className="flex justify-between">
+              <Button onClick={() => setStep(1)}>Back</Button>
+              <Button className="bg-black text-white" onClick={generateRecommendations}>Find Eco-AI Tools</Button>
             </CardFooter>
-          </>
+          </Card>
         )
       case 5:
         return (
@@ -209,8 +223,8 @@ export default function EcoAIFinder() {
   }
 
   return (
-    <Card className="w-full p-5 flex-col">
+    <div className="flex items-center justify-center min-h-screen">
       {renderStep()}
-    </Card>
+    </div>
   )
 }

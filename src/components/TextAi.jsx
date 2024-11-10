@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   CardContent,
@@ -54,23 +55,52 @@ export default function TextAi() {
     }
   };
 
+  const handleReset = () => {
+    setUserResponses({
+      focus: "",
+      categories: [],
+      industry: "",
+      metrics: [],
+      integrations: "",
+    });
+    setRecommendations([]);
+    setError(null);
+  };
+
   return (
     <div>
       <CardHeader>
-        <CardTitle>Metrics</CardTitle>
+        <CardTitle>Ask AI</CardTitle>
       </CardHeader>
       <CardContent>
         <Textarea
           name="focus"
           value={userResponses.focus}
           onChange={handleInputChange}
-          placeholder="Enter your metrics"
+          placeholder="Please recommend tools for energy-efficient machine learning with a focus on accuracy."
         />
       </CardContent>
-      <CardFooter>
-        <Button onClick={handleSubmit} disabled={isLoading}>
+      <CardFooter className="flex justify-between">
+        <Link to="/">
+          <Button className="bg-white text-black">
+            Back
+          </Button>
+        </Link>
+        <Button
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className="bg-black text-white hover:bg-white hover:text-black"
+        >
           {isLoading ? "Loading..." : "Get Recommendations"}
         </Button>
+        {recommendations.length > 0 && (
+          <Button
+            onClick={handleReset}
+            className="bg-black text-white hover:bg-white hover:text-black"
+          >
+            Enter New Prompt
+          </Button>
+        )}
       </CardFooter>
       {error && <p className="text-red-500 mt-4">{error}</p>}
 
