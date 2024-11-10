@@ -42,8 +42,8 @@ export default function ToolRecommendations({ recommendations }) {
   return (
     <Card className="w-full mb-8">
       <CardHeader>
-        <CardTitle>Recommended Eco-AI Tools</CardTitle>
-        <CardDescription>Based on your selected categories and preferences</CardDescription>
+        <CardTitle className="text-2xl font-bold">Recommended Eco-AI Tools</CardTitle>
+        <CardDescription className="text-lg font-bold">Based on your selected categories and preferences</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-8">
@@ -112,13 +112,13 @@ export default function ToolRecommendations({ recommendations }) {
             {recommendations.filter(tool => tool.Tool !== selectedTool.Tool).map((tool) => (
               <Card key={tool.Tool} className="flex flex-col justify-between">
                 <CardHeader>
-                  <CardTitle>{tool.Tool.replace(/_/g, ' ')}</CardTitle>
-                  <CardDescription>Score: {tool.Score.toFixed(2)}</CardDescription>
+                  <CardTitle className="font-bold">{tool.Tool.replace(/_/g, ' ')}</CardTitle>
+                  <CardDescription className="font-bold">Score: {tool.Score.toFixed(2)}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc list-inside">
                     {barChartMetrics.map(metric => (
-                      <li key={metric}>{metric}: {tool[metric].toFixed(2)}</li>
+                      <li key={metric} className="font-semibold">{metric}: {tool[metric].toFixed(2)}</li>
                     ))}
                   </ul>
                 </CardContent>

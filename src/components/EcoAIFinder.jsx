@@ -197,15 +197,15 @@ export default function EcoAIFinder() {
               <RadioGroup name="focus" onValueChange={(value) => handleInputChange({ target: { name: 'focus', value } })}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="energy efficiency" id="energy" />
-                  <Label htmlFor="energy">speed</Label>
+                  <Label htmlFor="energy">Energy Efficiency</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="waste reduction" id="waste" />
-                  <Label htmlFor="waste">accuracy</Label>
+                  <Label htmlFor="waste">Accuracy</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="resource management" id="resource" />
-                  <Label htmlFor="resource">mix</Label>
+                  <Label htmlFor="resource">Balanced</Label>
                 </div>
               </RadioGroup>
             </CardContent>

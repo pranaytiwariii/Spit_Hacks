@@ -26,7 +26,7 @@ function Hero() {
             Filter and explore <span className="text-[#6941C6] font-serif">AI</span> by
           </p>
           <h1 className="text-2xl md:text-2xl max-w-3xl font-semibold text-center flex-wrap">
-            their sustainability impact, enabling informed choices and
+            Their sustainability impact, enabling informed choices and
             fostering innovation in <span className="text-[#6941C6] font-serif">eco</span>-friendly technology.
           </h1>
         </div>
@@ -38,7 +38,7 @@ function Hero() {
                 src="HeroSection/play-circle.svg"
                 alt="play-circle"
               />
-              <h1>Ask-AI (Give promt) </h1>
+              <h1>Ask-AI (Give prompt) </h1>
             </button>
           </Link>
           <Link to="/options">
@@ -51,26 +51,11 @@ function Hero() {
       <div className="bottom-container">
         <div className="img-section">
           <img
-            className="lg:w-[90%] m-auto"
-            src="HeroSection/Macbook-Pro-16-mockup.png"
+            className="lg:w-[60%] m-auto"
+            src="/Homeimage.png"
             alt="mackbook"
           />
         </div>
-        <p className="text-center text-sm mt-6 md:mt-10 text-gray-500">
-          Prodets and tools incoperated in EcoAIFinder
-        </p>
-
-        {/* <div className="flex flex-col md:flex-row justify-between items-center md:mx-4 lg:mx-20 mt-8 mb-6 gap-8 md:gap-1">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center text-center gap-4 md:gap-2"
-            >
-              <div className="text-part font-semibold text-2xl md:text-lg">
-                {item}
-              </div>
-            </div>
-          ))} */}
         </div>
   </section>
   );
